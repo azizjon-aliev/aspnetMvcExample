@@ -1,6 +1,5 @@
-using BlogAPI.Controllers;
+using Asp.Versioning;
 using BlogApi.Data;
-using BlogAPI.Models;
 using BlogAPI.Repository;
 using BlogAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +15,17 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 builder.Services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 
 var app = builder.Build();

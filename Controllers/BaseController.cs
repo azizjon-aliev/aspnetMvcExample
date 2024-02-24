@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlogAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/[controller]")]
 public class BaseController<T, TKey> : Controller, IBaseController<T, TKey> where T: class
 {
     private readonly IBaseService<T, TKey> _service;
@@ -15,7 +15,7 @@ public class BaseController<T, TKey> : Controller, IBaseController<T, TKey> wher
     }
     
     [HttpGet]
-    public IEnumerable<T> GetAll([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<T> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
     {
         return _service.GetAll(skip: (pageNumber - 1) * pageSize, take: pageSize);
     }
@@ -33,7 +33,7 @@ public class BaseController<T, TKey> : Controller, IBaseController<T, TKey> wher
         return _service.Create(data);
     }
     
-    [HttpPut]
+    [HttpPut("{id}")]
     public T Put([FromQuery] TKey id, [FromBody] T data)
     {
         return _service.Update(id, data);
