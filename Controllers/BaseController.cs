@@ -15,9 +15,9 @@ public class BaseController<T> : Controller, IBaseController<T> where T: class
     }
     
     [HttpGet]
-    public IEnumerable<T> GetAll([FromQuery] int page, [FromQuery] int limit)
+    public IEnumerable<T> GetAll([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _service.GetAll(skip: page, take: limit);
+        return _service.GetAll(skip: (pageNumber - 1) * pageSize, take: pageSize);
     }
     
     [HttpGet("{id}")]

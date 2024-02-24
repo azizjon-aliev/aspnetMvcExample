@@ -1,4 +1,5 @@
 using BlogApi.Data;
+using BlogAPI.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repository;
@@ -22,7 +23,7 @@ public class BaseRepository<T>: IBaseRepository<T> where T : class
         var entity = _dbContext.instance.Set<T>().Find(id);
         
         if (entity == null)
-            throw new ArgumentException("Item not found");
+            throw new NotFoundException(typeof(T).Name, id);
         return entity;
     }
     
@@ -36,9 +37,9 @@ public class BaseRepository<T>: IBaseRepository<T> where T : class
     public T Update(int id, T entity)
     {
         var item = _dbContext.instance.Set<T>().Find(id);
-        
+
         if (item == null)
-            throw new ArgumentException("Item not found");
+            throw new NotFoundException(typeof(T).Name, id);
         
         _dbContext.instance.Entry(item).CurrentValues.SetValues(entity);
         _dbContext.SaveChanges();

@@ -11,7 +11,7 @@ public class BaseService<T>: IBaseService<T> where T : class
         _repository = repository;
     }
     
-    public IQueryable<T> GetAll(int skip, int take)
+    public IQueryable<T> GetAll(int skip = 0, int take = 100)
     {
         return _repository.GetAll().Skip(skip).Take(take);;
     }
