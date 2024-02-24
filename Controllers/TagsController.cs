@@ -1,7 +1,5 @@
 using BlogAPI.Models;
-using BlogAPI.Models.DTO;
 using BlogAPI.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BlogAPI.Controllers;
 
