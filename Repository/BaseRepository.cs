@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repository;
 
-public class BaseRepository<T>: IBaseRepository<T> where T : class
+public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T : class
 {
     readonly IApplicationDbContext _dbContext;
     
@@ -18,7 +18,7 @@ public class BaseRepository<T>: IBaseRepository<T> where T : class
         return _dbContext.instance.Set<T>().AsNoTracking();
     }
     
-    public T GetById(int id)
+    public T GetById(TKey id)
     {
         var entity = _dbContext.instance.Set<T>().Find(id);
         
@@ -34,7 +34,7 @@ public class BaseRepository<T>: IBaseRepository<T> where T : class
         return entity;
     }
     
-    public T Update(int id, T entity)
+    public T Update(TKey id, T entity)
     {
         var item = _dbContext.instance.Set<T>().Find(id);
 
@@ -46,7 +46,7 @@ public class BaseRepository<T>: IBaseRepository<T> where T : class
         return entity;
     }
     
-    public bool Delete(int id)
+    public bool Delete(TKey id)
     {
         var entity = _dbContext.instance.Set<T>().Find(id);
         if (entity == null)

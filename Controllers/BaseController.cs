@@ -5,11 +5,11 @@ namespace BlogAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BaseController<T> : Controller, IBaseController<T> where T: class
+public class BaseController<T, TKey> : Controller, IBaseController<T, TKey> where T: class
 {
-    private readonly IBaseService<T> _service;
+    private readonly IBaseService<T, TKey> _service;
     
-    public BaseController(IBaseService<T> service)
+    public BaseController(IBaseService<T, TKey> service)
     {
         _service = service;
     }
@@ -21,7 +21,7 @@ public class BaseController<T> : Controller, IBaseController<T> where T: class
     }
     
     [HttpGet("{id}")]
-    public T GetById(int id)
+    public T GetById(TKey id)
     {
         return _service.GetById(id);
     }
@@ -34,13 +34,13 @@ public class BaseController<T> : Controller, IBaseController<T> where T: class
     }
     
     [HttpPut]
-    public T Put([FromQuery] int id, [FromBody] T data)
+    public T Put([FromQuery] TKey id, [FromBody] T data)
     {
         return _service.Update(id, data);
     }
     
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public void Delete(TKey id)
     {
         _service.Delete(id);
     }

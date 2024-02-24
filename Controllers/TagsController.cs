@@ -3,9 +3,9 @@ using BlogAPI.Services;
 
 namespace BlogAPI.Controllers;
 
-public class TagsController: BaseController<Tag>
+public class TagsController: BaseController<Tag, Guid>
 {
-    public TagsController(IBaseService<Tag> service) : base(service)
+    public TagsController(IBaseService<Tag, Guid> service) : base(service)
     {
     }
 }

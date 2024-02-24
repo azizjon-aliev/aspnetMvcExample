@@ -1,10 +1,10 @@
 namespace BlogAPI.Repository;
 
-public interface IBaseRepository<T> where T : class
+public interface IBaseRepository<T, TKey> where T : class
 {
     IQueryable<T> GetAll();
-    T GetById(int id);
+    T GetById(TKey id);
     T Add(T entity);
-    T Update(int id, T entity);
-    bool Delete(int id);
+    T Update(TKey id, T entity);
+    bool Delete(TKey id);
 }

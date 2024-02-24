@@ -2,11 +2,11 @@ using BlogAPI.Repository;
 
 namespace BlogAPI.Services;
 
-public class BaseService<T>: IBaseService<T> where T : class
+public class BaseService<T, TKey>: IBaseService<T, TKey> where T : class
 {
-    private readonly IBaseRepository<T> _repository;
+    private readonly IBaseRepository<T, TKey> _repository;
     
-    public BaseService(IBaseRepository<T> repository)
+    public BaseService(IBaseRepository<T, TKey> repository)
     {
         _repository = repository;
     }
@@ -16,7 +16,7 @@ public class BaseService<T>: IBaseService<T> where T : class
         return _repository.GetAll().Skip(skip).Take(take);;
     }
 
-    public T GetById(int id)
+    public T GetById(TKey id)
     {
         return _repository.GetById(id);
     }
@@ -26,12 +26,12 @@ public class BaseService<T>: IBaseService<T> where T : class
         return _repository.Add(entity);
     }
 
-    public T Update(int id, T entity)
+    public T Update(TKey id, T entity)
     {
         return _repository.Update(id, entity);
     }
 
-    public bool Delete(int id)
+    public bool Delete(TKey id)
     {
         return _repository.Delete(id);
     }
