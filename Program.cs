@@ -1,6 +1,6 @@
 using Asp.Versioning;
 using BlogApi.Data;
-using BlogAPI.Repository;
+using BlogAPI.Repositories;
 using BlogAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +12,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default"))
 );
 builder.Services.AddControllers();
-builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
 builder.Services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
 builder.Services.AddApiVersioning(options =>

@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogApi.Data;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
     
-    public DbContext instance => this;
     public DbSet<Category> Categories { get; set; }
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Post> Posts { get; set; }

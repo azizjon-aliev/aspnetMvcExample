@@ -1,4 +1,4 @@
-namespace BlogAPI.Repository;
+namespace BlogAPI.Repositories;
 
 public interface IBaseRepository<T, TKey> where T : class
 {

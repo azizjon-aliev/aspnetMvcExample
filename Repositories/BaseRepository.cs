@@ -2,25 +2,25 @@ using BlogApi.Data;
 using BlogAPI.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlogAPI.Repository;
+namespace BlogAPI.Repositories;
 
 public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T : class
 {
-    readonly IApplicationDbContext _dbContext;
+    readonly ApplicationDbContext _dbContext;
     
-    public BaseRepository(IApplicationDbContext dbContext)
+    public BaseRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
     
     public IQueryable<T> GetAll()
     {
-        return _dbContext.instance.Set<T>().AsNoTracking();
+        return _dbContext.Set<T>().AsNoTracking();
     }
     
     public T GetById(TKey id)
     {
-        var entity = _dbContext.instance.Set<T>().Find(id);
+        var entity = _dbContext.Set<T>().Find(id);
         
         if (entity == null)
             throw new NotFoundException(typeof(T).Name, id);
@@ -29,31 +29,31 @@ public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T : class
     
     public T Add(T entity)
     {
-        _dbContext.instance.Set<T>().Add(entity);
+        _dbContext.Set<T>().Add(entity);
         _dbContext.SaveChanges();
         return entity;
     }
     
     public T Update(TKey id, T entity)
     {
-        var item = _dbContext.instance.Set<T>().Find(id);
+        var item = _dbContext.Set<T>().Find(id);
 
         if (item == null)
             throw new NotFoundException(typeof(T).Name, id);
         
-        _dbContext.instance.Entry(item).CurrentValues.SetValues(entity);
+        _dbContext.Entry(item).CurrentValues.SetValues(entity);
         _dbContext.SaveChanges();
         return entity;
     }
     
     public bool Delete(TKey id)
     {
-        var entity = _dbContext.instance.Set<T>().Find(id);
+        var entity = _dbContext.Set<T>().Find(id);
         if (entity == null)
         {
             return false;
         }
-        _dbContext.instance.Set<T>().Remove(entity);
+        _dbContext.Set<T>().Remove(entity);
         _dbContext.SaveChanges();
         return true;
     }

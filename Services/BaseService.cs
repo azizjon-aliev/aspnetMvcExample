@@ -1,4 +1,4 @@
-using BlogAPI.Repository;
+using BlogAPI.Repositories;
 
 namespace BlogAPI.Services;
 
