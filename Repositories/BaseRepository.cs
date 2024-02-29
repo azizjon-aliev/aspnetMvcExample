@@ -1,60 +1,58 @@
 using BlogApi.Data;
-using BlogAPI.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repositories;
 
-public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T : class
+public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where T : class
 {
-    readonly ApplicationDbContext _dbContext;
-    
-    public BaseRepository(ApplicationDbContext dbContext)
+    private readonly ApplicationDbContext _dbContext;
+
+    public BaseAsyncRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-    
-    public IQueryable<T> GetAll()
-    {
-        return _dbContext.Set<T>().AsNoTracking();
-    }
-    
-    public T GetById(TKey id)
-    {
-        var entity = _dbContext.Set<T>().Find(id);
-        
-        if (entity == null)
-            throw new NotFoundException(typeof(T).Name, id);
-        return entity;
-    }
-    
-    public T Add(T entity)
-    {
-        _dbContext.Set<T>().Add(entity);
-        _dbContext.SaveChanges();
-        return entity;
-    }
-    
-    public T Update(TKey id, T entity)
-    {
-        var item = _dbContext.Set<T>().Find(id);
 
-        if (item == null)
-            throw new NotFoundException(typeof(T).Name, id);
-        
-        _dbContext.Entry(item).CurrentValues.SetValues(entity);
-        _dbContext.SaveChanges();
+    public async Task<IQueryable<T>> GetAll()
+    {
+        return await Task.FromResult(_dbContext.Set<T>().AsQueryable());
+    }
+
+    public async Task<T?> GetById(TKey id)
+    {
+        return await _dbContext.Set<T>().FindAsync(id);
+    }
+
+    public async Task<T> Add(T entity)
+    {
+        await _dbContext.Set<T>().AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
         return entity;
     }
-    
-    public bool Delete(TKey id)
+
+    public async Task<T?> Update(TKey id, T entity)
     {
-        var entity = _dbContext.Set<T>().Find(id);
+        var existingEntity = await GetById(id);
+
+        if (existingEntity == null)
+        {
+            return null;
+        }
+
+        _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+        await _dbContext.SaveChangesAsync();
+        return existingEntity;
+    }
+
+    public async Task<bool> Delete(TKey id)
+    {
+        var entity = await GetById(id);
+
         if (entity == null)
         {
             return false;
         }
+
         _dbContext.Set<T>().Remove(entity);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         return true;
     }
 }
