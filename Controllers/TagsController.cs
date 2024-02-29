@@ -1,11 +1,21 @@
 using BlogAPI.Models;
 using BlogAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlogAPI.Controllers;
 
-public class TagsController: BaseController<Tag, Guid>
+[ApiController]
+[Route("api/v{v:apiVersion}/[controller]")]
+public class TagsController: ControllerBase
 {
-    public TagsController(IBaseService<Tag, Guid> service) : base(service)
+    private readonly IBaseService<Tag, Guid> _service;
+    private readonly ILogger<TagsController> _logger;
+
+    public TagsController(IBaseService<Tag, Guid> service, ILogger<TagsController> logger)
     {
+        _service = service;
+        _logger = logger;
     }
+    
+    
 }
