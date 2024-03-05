@@ -1,4 +1,4 @@
-using BlogAPI.Models;
+using BlogAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +8,7 @@ public class TagConfiguration: IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
+        builder.HasKey(p => p.Id);
         builder.HasMany(p => p.Posts)
             .WithMany(p => p.Tags);
         builder.HasIndex(p => p.Name)

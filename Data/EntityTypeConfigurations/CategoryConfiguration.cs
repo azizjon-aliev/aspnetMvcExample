@@ -1,4 +1,4 @@
-using BlogAPI.Models;
+using BlogAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +8,7 @@ public class CategoryConfiguration: IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
+        builder.HasKey(p => p.Id);
         builder.HasMany(p => p.Posts)
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId)

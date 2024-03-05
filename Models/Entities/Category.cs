@@ -1,8 +1,7 @@
-namespace BlogAPI.Models;
+namespace BlogAPI.Models.Entities;
 
-public class Category
+public class Category: BaseEntity
 {
-    public Guid Id { get; set; }
     public string Name { get; set; }
     public ICollection<Post> Posts { get; } = new List<Post>();
 }

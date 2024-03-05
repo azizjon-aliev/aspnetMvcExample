@@ -1,5 +1,5 @@
 using BlogApi.Data.EntityTypeConfigurations;
-using BlogAPI.Models;
+using BlogAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApi.Data;
@@ -16,6 +16,7 @@ public class ApplicationDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Ignore<BaseEntity>();
         builder.ApplyConfiguration(new TagConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new PostConfiguration());

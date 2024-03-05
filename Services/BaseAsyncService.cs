@@ -1,8 +1,9 @@
+using BlogAPI.Models.Entities;
 using BlogAPI.Repositories;
 
 namespace BlogAPI.Services;
 
-public class BaseAsyncService<T, TKey>: IBaseAsyncService<T, TKey> where T : class
+public class BaseAsyncService<T, TKey>: IBaseAsyncService<T, TKey> where T : BaseEntity
 {
     private readonly IBaseAsyncRepository<T, TKey> _repository;
     

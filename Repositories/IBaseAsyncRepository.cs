@@ -1,6 +1,8 @@
+using BlogAPI.Models.Entities;
+
 namespace BlogAPI.Repositories;
 
-public interface IBaseAsyncRepository<T, in TKey> where T : class
+public interface IBaseAsyncRepository<T, in TKey> where T : BaseEntity
 {
     Task<IQueryable<T>> GetAll();
     Task<T?> GetById(TKey id);

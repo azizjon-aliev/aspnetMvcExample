@@ -1,8 +1,7 @@
-namespace BlogAPI.Models;
+namespace BlogAPI.Models.Entities;
 
-public class Tag
+public class Tag: BaseEntity
 {
-    public Guid Id { get; set; }
     public string Name { get; set; }
     public List<Post> Posts { get; } = [];
 }

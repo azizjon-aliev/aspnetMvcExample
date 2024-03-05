@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240223094348_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240305135149_InititalCreate")]
+    partial class InititalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace BlogAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
 
-            modelBuilder.Entity("BlogAPI.Models.Category", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace BlogAPI.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BlogAPI.Models.Post", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace BlogAPI.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("BlogAPI.Models.Tag", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,9 +104,9 @@ namespace BlogAPI.Migrations
                     b.ToTable("PostTag");
                 });
 
-            modelBuilder.Entity("BlogAPI.Models.Post", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.Post", b =>
                 {
-                    b.HasOne("BlogAPI.Models.Category", "Category")
+                    b.HasOne("BlogAPI.Models.Entities.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -117,20 +117,20 @@ namespace BlogAPI.Migrations
 
             modelBuilder.Entity("PostTag", b =>
                 {
-                    b.HasOne("BlogAPI.Models.Post", null)
+                    b.HasOne("BlogAPI.Models.Entities.Post", null)
                         .WithMany()
                         .HasForeignKey("PostsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlogAPI.Models.Tag", null)
+                    b.HasOne("BlogAPI.Models.Entities.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BlogAPI.Models.Category", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.Category", b =>
                 {
                     b.Navigation("Posts");
                 });

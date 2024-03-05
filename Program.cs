@@ -1,9 +1,9 @@
 using Asp.Versioning;
 using BlogApi.Data;
-using BlogAPI.Mapper;
 using BlogAPI.Repositories;
 using BlogAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using BlogAPI.Common.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +27,7 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 builder.Services.AddLogging();
-builder.Services.AddAutoMapper(typeof(BlogMappingProfile));
+builder.Services.AddAutoMapper(typeof(ApplicationMappingProfile));
 
 
 var app = builder.Build();

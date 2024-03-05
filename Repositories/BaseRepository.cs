@@ -1,8 +1,10 @@
 using BlogApi.Data;
+using BlogAPI.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repositories;
 
-public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where T : class
+public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where T : BaseEntity
 {
     private readonly ApplicationDbContext _dbContext;
 
@@ -31,15 +33,17 @@ public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where 
     public async Task<T?> Update(TKey id, T entity)
     {
         var existingEntity = await GetById(id);
-
+        
         if (existingEntity == null)
         {
             return null;
         }
-
+        
+        entity.Id = existingEntity.Id;
         _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
         await _dbContext.SaveChangesAsync();
-        return existingEntity;
+        
+        return entity;
     }
 
     public async Task<bool> Delete(TKey id)

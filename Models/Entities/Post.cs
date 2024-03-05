@@ -1,8 +1,7 @@
-namespace BlogAPI.Models;
+namespace BlogAPI.Models.Entities;
 
-public class Post
+public class Post: BaseEntity
 {
-    public Guid Id { get; set; }
     public string Title { get; set; }
     public string? Description { get; set; }
     public bool IsPublished { get; set; }

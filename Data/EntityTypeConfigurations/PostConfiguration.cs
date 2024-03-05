@@ -1,4 +1,4 @@
-using BlogAPI.Models;
+using BlogAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +8,7 @@ public class PostConfiguration: IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
+        builder.HasKey(p => p.Id);
         builder.HasIndex(p => p.Title)
             .IsUnique();
         builder.Property(p => p.Title)

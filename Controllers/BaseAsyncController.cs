@@ -1,14 +1,15 @@
 using AutoMapper;
+using BlogAPI.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using BlogAPI.Services;
 
 namespace BlogAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class BaseAsyncController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto, TService> 
+    [Route("api/v{v:apiVersion}/[controller]")]
+    public class BaseAsyncController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
         : ControllerBase, IBaseAsyncController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
-        where TEntity : class
+        where TEntity : BaseEntity
     {
         private readonly IBaseAsyncService<TEntity, TKey> _service;
         private readonly IMapper _mapper;
@@ -20,20 +21,21 @@ namespace BlogAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TShortDto>>> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
+        public async Task<ActionResult<IEnumerable<TShortDto>>> GetAll([FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 100)
         {
             var entities = await _service.GetAll(pageNumber, pageSize);
             var result = new List<TShortDto>();
-            
+
             foreach (var entity in entities)
             {
-                var dto = _mapper<TShortDto>(entity);
+                var dto = _mapper.Map<TShortDto>(entity);
                 result.Add(dto);
             }
-            
+
             return Ok(result);
         }
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<TDetailDto>> GetById(TKey id)
         {
@@ -44,45 +46,36 @@ namespace BlogAPI.Controllers
                 return NotFound();
             }
 
-            var dto = /* map to TDetailDto */;
+            var dto = _mapper.Map<TDetailDto>(entity);
             return Ok(dto);
         }
 
         [HttpPost]
         public async Task<ActionResult<TDetailDto>> Create([FromBody] TCreateDto data)
         {
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            */
 
-            var entity = /* map from TCreateDto */;
-            await _service.Create(entity);
+            var entity = _mapper.Map<TEntity>(data);
+            
+            var response = await _service.Create(entity);
 
-            var dto = /* map to TDetailDto */;
-            return CreatedAtAction(nameof(GetById), new { id = /* get the ID of the created entity */ }, dto);
+            var dto = _mapper.Map<TDetailDto>(response);
+            
+            return Ok(dto);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<TDetailDto>> Update(TKey id, [FromBody] TUpdateDto data)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var entity = _mapper.Map<TEntity>(data);
+            
+            var response = await _service.Update(id, entity);
 
-            var existingEntity = await _service.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            /* Update properties of existingEntity using data */
-
-            await _service.Update(existingEntity);
-
-            var dto = /* map to TDetailDto */;
+            var dto = _mapper.Map<TDetailDto>(response);
             return Ok(dto);
         }
 

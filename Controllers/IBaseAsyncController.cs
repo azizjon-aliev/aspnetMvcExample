@@ -1,9 +1,10 @@
+using BlogAPI.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogAPI.Controllers
 {
     public interface IBaseAsyncController<TEntity, in TKey, TShortDto, TDetailDto, in TCreateDto, in TUpdateDto>
-        where TEntity : class
+        where TEntity : BaseEntity
     {
         Task<ActionResult<IEnumerable<TShortDto>>> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100);
         Task<ActionResult<TDetailDto>> GetById(TKey id);
