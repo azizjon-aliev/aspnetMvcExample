@@ -5,9 +5,9 @@ using BlogAPI.Services;
 
 namespace BlogAPI.Controllers;
 
-public class PostsController: BaseAsyncController<Post, Guid, ShortPostDto, DetailPostDto, CreatePostDto, UpdatePostDto>
+public class PostsController: BaseController<Post, Guid, ShortPostDto, DetailPostDto, CreatePostDto, UpdatePostDto>
 {
-    public PostsController(IBaseAsyncService<Post, Guid> service, IMapper mapper) : base(service, mapper)
+    public PostsController(IBaseService<Post, Guid> service, IMapper mapper) : base(service, mapper)
     {
     }
 }

@@ -7,24 +7,24 @@ namespace BlogAPI.Controllers
 {
     [ApiController]
     [Route("api/v{v:apiVersion}/[controller]")]
-    public class BaseAsyncController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
-        : ControllerBase, IBaseAsyncController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
+    public class BaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
+        : ControllerBase, IBaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
         where TEntity : BaseEntity
     {
-        private readonly IBaseAsyncService<TEntity, TKey> _service;
+        private readonly IBaseService<TEntity, TKey> _service;
         private readonly IMapper _mapper;
 
-        public BaseAsyncController(IBaseAsyncService<TEntity, TKey> service, IMapper mapper)
+        public BaseController(IBaseService<TEntity, TKey> service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TShortDto>>> GetAll([FromQuery] int pageNumber = 1,
+        public async Task<ActionResult<IEnumerable<TShortDto>>> GetAllAsync([FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 100)
         {
-            var entities = await _service.GetAll(pageNumber, pageSize);
+            var entities = await _service.GetAllAsync(pageNumber, pageSize);
             var result = new List<TShortDto>();
 
             foreach (var entity in entities)
@@ -37,9 +37,9 @@ namespace BlogAPI.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<TDetailDto>> GetById(TKey id)
+        public async Task<ActionResult<TDetailDto>> GetByIdAsync(TKey id)
         {
-            var entity = await _service.GetById(id);
+            var entity = await _service.GetByIdAsync(id);
 
             if (entity == null)
             {
@@ -51,7 +51,7 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TDetailDto>> Create([FromBody] TCreateDto data)
+        public async Task<ActionResult<TDetailDto>> AddAsync([FromBody] TCreateDto data)
         {
             /*if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace BlogAPI.Controllers
 
             var entity = _mapper.Map<TEntity>(data);
             
-            var response = await _service.Create(entity);
+            var response = await _service.AddAsync(entity);
 
             var dto = _mapper.Map<TDetailDto>(response);
             
@@ -69,20 +69,20 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<TDetailDto>> Update(TKey id, [FromBody] TUpdateDto data)
+        public async Task<ActionResult<TDetailDto>> UpdateAsync(TKey id, [FromBody] TUpdateDto data)
         {
             var entity = _mapper.Map<TEntity>(data);
             
-            var response = await _service.Update(id, entity);
+            var response = await _service.UpdateAsync(id, entity);
 
             var dto = _mapper.Map<TDetailDto>(response);
             return Ok(dto);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(TKey id)
+        public async Task<ActionResult> RemoveAsync(TKey id)
         {
-            var result = await _service.Delete(id);
+            var result = await _service.RemoveAsync(id);
 
             if (!result)
             {

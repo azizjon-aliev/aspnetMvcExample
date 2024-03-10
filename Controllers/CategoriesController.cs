@@ -5,9 +5,9 @@ using BlogAPI.Services;
 
 namespace BlogAPI.Controllers;
 
-public class CategoriesController: BaseAsyncController<Category,Guid, ShortCategoryDto, DetailCategoryDto, CreateCategoryDto, UpdateCategoryDto>
+public class CategoriesController: BaseController<Category,Guid, ShortCategoryDto, DetailCategoryDto, CreateCategoryDto, UpdateCategoryDto>
 {
-    public CategoriesController(IBaseAsyncService<Category, Guid> service, IMapper mapper) : base(service, mapper)
+    public CategoriesController(IBaseService<Category, Guid> service, IMapper mapper) : base(service, mapper)
     {
     }
 }
