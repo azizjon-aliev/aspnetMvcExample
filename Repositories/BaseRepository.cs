@@ -1,38 +1,37 @@
 using BlogApi.Data;
 using BlogAPI.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repositories;
 
-public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where T : BaseEntity
+public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEntity
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public BaseAsyncRepository(ApplicationDbContext dbContext)
+    public BaseRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<IQueryable<T>> GetAll()
+    public async Task<IQueryable<T>> GetAllAsync()
     {
         return await Task.FromResult(_dbContext.Set<T>().AsQueryable());
     }
 
-    public async Task<T?> GetById(TKey id)
+    public async Task<T?> GetByIdAsync(TKey id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }
 
-    public async Task<T> Add(T entity)
+    public async Task<T> AddAsync(T entity)
     {
         await _dbContext.Set<T>().AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<T?> Update(TKey id, T entity)
+    public async Task<T?> UpdateAsync(TKey id, T entity)
     {
-        var existingEntity = await GetById(id);
+        var existingEntity = await GetByIdAsync(id);
         
         if (existingEntity == null)
         {
@@ -46,9 +45,9 @@ public class BaseAsyncRepository<T, TKey> : IBaseAsyncRepository<T, TKey> where 
         return entity;
     }
 
-    public async Task<bool> Delete(TKey id)
+    public async Task<bool> RemoveAsync(TKey id)
     {
-        var entity = await GetById(id);
+        var entity = await GetByIdAsync(id);
 
         if (entity == null)
         {
