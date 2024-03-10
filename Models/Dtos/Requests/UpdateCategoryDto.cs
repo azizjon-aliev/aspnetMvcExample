@@ -1,3 +1,3 @@
-namespace BlogAPI.Common.DTO.CategoryDto;
+namespace BlogAPI.Models.Dtos.Requests;
 
 public record UpdateCategoryDto(string Name);

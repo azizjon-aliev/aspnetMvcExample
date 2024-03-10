@@ -1,3 +1,3 @@
-namespace BlogAPI.Common.DTO.CategoryDto;
+namespace BlogAPI.Models.Dtos.Responses;
 
 public record ShortCategoryDto(Guid Id, string Name);

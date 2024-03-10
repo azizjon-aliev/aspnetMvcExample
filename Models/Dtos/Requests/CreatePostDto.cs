@@ -1,3 +1,3 @@
-namespace BlogAPI.Common.DTO.PostDto;
+namespace BlogAPI.Models.Dtos.Requests;
 
 public record CreatePostDto(string Title, string? Description, bool IsPublished, Guid CategoryId);

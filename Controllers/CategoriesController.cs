@@ -1,5 +1,6 @@
 using AutoMapper;
-using BlogAPI.Common.DTO.CategoryDto;
+using BlogAPI.Models.Dtos.Responses;
+using BlogAPI.Models.Dtos.Requests;
 using BlogAPI.Models.Entities;
 using BlogAPI.Services;
 

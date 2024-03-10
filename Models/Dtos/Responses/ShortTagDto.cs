@@ -1,3 +1,3 @@
-namespace BlogAPI.Common.DTO.TagDto;
+namespace BlogAPI.Models.Dtos.Responses;
 
 public record ShortTagDto(Guid Id, string Name);

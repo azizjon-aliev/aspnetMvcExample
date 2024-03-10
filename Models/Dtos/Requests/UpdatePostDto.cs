@@ -1,3 +1,3 @@
-namespace BlogAPI.Common.DTO.PostDto;
+namespace BlogAPI.Models.Dtos.Requests;
 
 public record UpdatePostDto(string Title, string? Description, bool IsPublished, Guid CategoryId);

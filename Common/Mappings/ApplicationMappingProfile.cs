@@ -1,8 +1,7 @@
 using AutoMapper;
-using BlogAPI.Common.DTO.TagDto;
-using BlogAPI.Common.DTO.CategoryDto;
-using BlogAPI.Common.DTO.PostDto;
 using BlogAPI.Models.Entities;
+using BlogAPI.Models.Dtos.Responses;
+using BlogAPI.Models.Dtos.Requests;
 
 namespace BlogAPI.Common.Mappings;
 
