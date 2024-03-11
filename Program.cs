@@ -20,14 +20,17 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version")
+    );
 }).AddApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'V";
     options.SubstituteApiVersionInUrl = true;
 });
 builder.Services.AddLogging();
-builder.Services.AddAutoMapper(typeof(ApplicationMappingProfile));
+builder.Services.AddAutoMapper(typeof(PostMappingProfile), typeof(CategoryMappingProfile), typeof(TagMappingProfile));
 
 
 var app = builder.Build();
