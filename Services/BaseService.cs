@@ -12,10 +12,10 @@ public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
         _repository = repository;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(int skip = 0, int take = 100)
+    public async Task<IEnumerable<T>> GetAllAsync(int skip = 1, int take = 100)
     {
         var result = await _repository.GetAllAsync();
-        return result.Skip(skip).Take(take);
+        return result.Skip((skip - 1) * take).Take(((skip - 1) * take) + take);
     }
 
     public async Task<T?> GetByIdAsync(TKey id)
