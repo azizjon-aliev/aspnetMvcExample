@@ -1,4 +1,4 @@
-namespace BlogAPI.Models.Entities;
+namespace BlogAPI.Core.Models;
 
 public abstract class BaseEntity
 {

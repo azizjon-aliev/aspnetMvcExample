@@ -1,3 +1,3 @@
 namespace BlogAPI.Models.Dtos.Responses;
 
-public record ShortPostDto(Guid Id, string Title, bool IsPublished);
+public record ShortPostDto(int Id, string Title, bool IsPublished);

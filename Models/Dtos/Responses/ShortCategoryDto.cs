@@ -1,3 +1,3 @@
 namespace BlogAPI.Models.Dtos.Responses;
 
-public record ShortCategoryDto(Guid Id, string Name, int PostCount = 0);
+public record ShortCategoryDto(int Id, string Name, int PostCount = 0);

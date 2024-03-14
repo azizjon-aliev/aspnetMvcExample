@@ -1,5 +1,5 @@
 using AutoMapper;
-using BlogAPI.Models.Entities;
+using BlogAPI.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using BlogAPI.Core.Services;
 

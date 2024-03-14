@@ -1,4 +1,4 @@
-using BlogAPI.Models.Entities;
+using BlogAPI.Core.Models;
 
 namespace BlogAPI.Core.Services;
 

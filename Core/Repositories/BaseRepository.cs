@@ -1,5 +1,5 @@
 using BlogApi.Data;
-using BlogAPI.Models.Entities;
+using BlogAPI.Core.Models;
 
 namespace BlogAPI.Core.Repositories;
 

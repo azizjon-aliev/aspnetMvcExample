@@ -1,6 +1,7 @@
 using BlogApi.Data.EntityTypeConfigurations;
-using BlogAPI.Models.Entities;
+using BlogAPI.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using BlogAPI.Models.Entities;
 
 namespace BlogApi.Data;
 

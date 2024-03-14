@@ -1,4 +1,4 @@
 namespace BlogAPI.Models.Dtos.Responses;
 
-public record DetailCategoryDto(Guid Id, string Name);
+public record DetailCategoryDto(int Id, string Name);
 

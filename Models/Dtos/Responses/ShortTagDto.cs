@@ -1,3 +1,3 @@
 namespace BlogAPI.Models.Dtos.Responses;
 
-public record ShortTagDto(Guid Id, string Name, int PostsCount = 0);
+public record ShortTagDto(int Id, string Name, int PostsCount = 0);

@@ -1,3 +1,3 @@
 namespace BlogAPI.Models.Dtos.Responses;
 
-public record DetailTagDto(Guid Id, string Name);
+public record DetailTagDto(int Id, string Name);
