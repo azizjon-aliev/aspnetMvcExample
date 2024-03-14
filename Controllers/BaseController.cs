@@ -8,7 +8,7 @@ namespace BlogAPI.Controllers
 {
     [ApiController]
     [Route("api/v{v:apiVersion}/[controller]")]
-    public class BaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
+    public abstract class BaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
         : ControllerBase, IBaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
         where TEntity : BaseEntity
     {

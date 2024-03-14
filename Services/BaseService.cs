@@ -3,38 +3,38 @@ using BlogAPI.Repositories;
 
 namespace BlogAPI.Services;
 
-public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
+public abstract class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
 {
-    private readonly IBaseRepository<T, TKey> _repository;
+    protected readonly IBaseRepository<T, TKey> Repository;
     
     public BaseService(IBaseRepository<T, TKey> repository)
     {
-        _repository = repository;
+        Repository = repository;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(int skip = 1, int take = 100)
+    public virtual async Task<IEnumerable<T>> GetAllAsync(int skip = 1, int take = 100)
     {
-        var result = await _repository.GetAllAsync();
+        var result = await Repository.GetAllAsync();
         return result.Skip((skip - 1) * take).Take(((skip - 1) * take) + take);
     }
 
-    public async Task<T?> GetByIdAsync(TKey id)
+    public virtual async Task<T?> GetByIdAsync(TKey id)
     {
-        return await _repository.GetByIdAsync(id);
+        return await Repository.GetByIdAsync(id);
     }
 
-    public async Task<T> AddAsync(T entity)
+    public virtual async Task<T> AddAsync(T entity)
     {
-        return await _repository.AddAsync(entity);
+        return await Repository.AddAsync(entity);
     }
 
-    public async Task<T?> UpdateAsync(TKey id, T entity)
+    public virtual async Task<T?> UpdateAsync(TKey id, T entity)
     {
-        return await _repository.UpdateAsync(id, entity);
+        return await Repository.UpdateAsync(id, entity);
     }
 
-    public async Task<bool> RemoveAsync(TKey id)
+    public virtual async Task<bool> RemoveAsync(TKey id)
     {
-        return await _repository.RemoveAsync(id);
+        return await Repository.RemoveAsync(id);
     }
 }

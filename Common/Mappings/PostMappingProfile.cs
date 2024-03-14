@@ -11,7 +11,10 @@ public class PostMappingProfile: Profile
     {
         CreateMap<Post, ShortPostDto>().ReverseMap();
         CreateMap<Post, DetailPostDto>().ReverseMap();
-        CreateMap<Post, CreatePostDto>().ReverseMap();
+        CreateMap<CreatePostDto, Post>()
+            .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x => x)));
+
+        CreateMap<Post, CreatePostDto>();
         CreateMap<Post, UpdatePostDto>().ReverseMap();
     }
 }
