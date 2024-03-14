@@ -7,5 +7,5 @@ public class Post: BaseEntity
     public bool IsPublished { get; set; }
     public Guid CategoryId { get; set; }
     public Category Category { get; set; } = null!;
-    public List<Tag> Tags { get; } = [];
+    public List<Tag> Tags { get; set; } = [];
 }

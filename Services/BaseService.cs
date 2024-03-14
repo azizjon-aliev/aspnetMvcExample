@@ -3,7 +3,7 @@ using BlogAPI.Repositories;
 
 namespace BlogAPI.Services;
 
-public abstract class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
+public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
 {
     protected readonly IBaseRepository<T, TKey> Repository;
     

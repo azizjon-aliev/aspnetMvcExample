@@ -3,7 +3,7 @@ using BlogAPI.Models.Entities;
 
 namespace BlogAPI.Repositories;
 
-public abstract class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEntity
+public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEntity
 {
     protected readonly ApplicationDbContext _dbContext;
 
