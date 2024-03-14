@@ -1,21 +1,20 @@
-using Asp.Versioning;
 using AutoMapper;
 using BlogAPI.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using BlogAPI.Services;
+using BlogAPI.Core.Services;
 
-namespace BlogAPI.Controllers
+namespace BlogAPI.Core.Controllers
 {
     [ApiController]
     [Route("api/v{v:apiVersion}/[controller]")]
-    public abstract class BaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
-        : ControllerBase, IBaseController<TEntity, TKey, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
+    public abstract class BaseController<TEntity, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
+        : ControllerBase, IBaseController<TEntity, TShortDto, TDetailDto, TCreateDto, TUpdateDto>
         where TEntity : BaseEntity
     {
-        protected readonly IBaseService<TEntity, TKey> Service;
+        protected readonly IBaseService<TEntity> Service;
         protected readonly IMapper Mapper;
 
-        public BaseController(IBaseService<TEntity, TKey> service, IMapper mapper)
+        public BaseController(IBaseService<TEntity> service, IMapper mapper)
         {
             Service = service;
             Mapper = mapper;
@@ -38,7 +37,7 @@ namespace BlogAPI.Controllers
         }
         
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TDetailDto>> GetByIdAsync(TKey id)
+        public virtual async Task<ActionResult<TDetailDto>> GetByIdAsync(int id)
         {
             var entity = await Service.GetByIdAsync(id);
 
@@ -70,7 +69,7 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TDetailDto>> UpdateAsync(TKey id, [FromBody] TUpdateDto data)
+        public virtual async Task<ActionResult<TDetailDto>> UpdateAsync(int id, [FromBody] TUpdateDto data)
         {
             var entity = Mapper.Map<TEntity>(data);
             
@@ -81,7 +80,7 @@ namespace BlogAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult> RemoveAsync(TKey id)
+        public virtual async Task<ActionResult> RemoveAsync(int id)
         {
             var result = await Service.RemoveAsync(id);
 

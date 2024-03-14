@@ -3,13 +3,13 @@ using BlogAPI.Models.Dtos.Responses;
 using BlogAPI.Models.Dtos.Requests;
 using BlogAPI.Models.Entities;
 using BlogAPI.Services;
-using Microsoft.AspNetCore.Mvc;
+using BlogAPI.Core.Controllers;
 
 namespace BlogAPI.Controllers;
 
-public class TagsController : BaseController<Tag, Guid, ShortTagDto, DetailTagDto, CreateTagDto, UpdateTagDto>
+public class TagsController : BaseController<Tag, ShortTagDto, DetailTagDto, CreateTagDto, UpdateTagDto>
 {
-    public TagsController(IBaseService<Tag, Guid> service, IMapper mapper) : base(service, mapper)
+    public TagsController(IBaseService<Tag> service, IMapper mapper) : base(service, mapper)
     {
     }
 }

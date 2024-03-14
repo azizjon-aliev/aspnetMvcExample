@@ -2,12 +2,12 @@ namespace BlogAPI.Models.Entities;
 
 public abstract class BaseEntity
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
-    public BaseEntity()
-    {
-        Id = Guid.NewGuid();
-    }
+    // public BaseEntity()
+    // {
+    //     Id = Guid.NewGuid();
+    // }
 
     public override string ToString()
     {

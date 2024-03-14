@@ -1,13 +1,13 @@
 using BlogAPI.Models.Entities;
-using BlogAPI.Repositories;
+using BlogAPI.Core.Repositories;
 
-namespace BlogAPI.Services;
+namespace BlogAPI.Core.Services;
 
-public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
+public class BaseService<T>: IBaseService<T> where T : BaseEntity
 {
-    protected readonly IBaseRepository<T, TKey> Repository;
+    protected readonly IBaseRepository<T> Repository;
     
-    public BaseService(IBaseRepository<T, TKey> repository)
+    public BaseService(IBaseRepository<T> repository)
     {
         Repository = repository;
     }
@@ -18,7 +18,7 @@ public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
         return result.Skip((skip - 1) * take).Take(((skip - 1) * take) + take);
     }
 
-    public virtual async Task<T?> GetByIdAsync(TKey id)
+    public virtual async Task<T?> GetByIdAsync(int id)
     {
         return await Repository.GetByIdAsync(id);
     }
@@ -28,12 +28,12 @@ public class BaseService<T, TKey>: IBaseService<T, TKey> where T : BaseEntity
         return await Repository.AddAsync(entity);
     }
 
-    public virtual async Task<T?> UpdateAsync(TKey id, T entity)
+    public virtual async Task<T?> UpdateAsync(int id, T entity)
     {
         return await Repository.UpdateAsync(id, entity);
     }
 
-    public virtual async Task<bool> RemoveAsync(TKey id)
+    public virtual async Task<bool> RemoveAsync(int id)
     {
         return await Repository.RemoveAsync(id);
     }

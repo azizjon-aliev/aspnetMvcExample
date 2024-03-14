@@ -1,9 +1,9 @@
 using BlogApi.Data;
 using BlogAPI.Models.Entities;
 
-namespace BlogAPI.Repositories;
+namespace BlogAPI.Core.Repositories;
 
-public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEntity
+public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
     protected readonly ApplicationDbContext _dbContext;
 
@@ -17,7 +17,7 @@ public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEn
         return await Task.FromResult(_dbContext.Set<T>().AsQueryable());
     }
 
-    public virtual async Task<T?> GetByIdAsync(TKey id)
+    public virtual async Task<T?> GetByIdAsync(int id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }
@@ -29,7 +29,7 @@ public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEn
         return entity;
     }
 
-    public virtual async Task<T?> UpdateAsync(TKey id, T entity)
+    public virtual async Task<T?> UpdateAsync(int id, T entity)
     {
         var existingEntity = await GetByIdAsync(id);
         
@@ -45,7 +45,7 @@ public class BaseRepository<T, TKey> : IBaseRepository<T, TKey> where T : BaseEn
         return entity;
     }
 
-    public virtual async Task<bool> RemoveAsync(TKey id)
+    public virtual async Task<bool> RemoveAsync(int id)
     {
         var entity = await GetByIdAsync(id);
 
