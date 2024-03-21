@@ -12,7 +12,9 @@ public class TagMappingProfile: Profile
         CreateMap<Tag, ShortTagDto>()
             .ForMember(dest => dest.PostsCount, opt => opt.MapFrom(src => src.Posts.Count));
 
-        CreateMap<Tag, DetailTagDto>();
+        CreateMap<Tag, DetailTagDto>()
+            .ForMember(dest => dest.Posts, opt => opt.MapFrom(src => src.Posts.Select(x => new ShortPostDto( x.Id, x.Title ))));
+        
         CreateMap<DetailCategoryDto, Tag>();
         CreateMap<Tag, CreateTagDto>().ReverseMap();
         CreateMap<Tag, UpdateTagDto>().ReverseMap();

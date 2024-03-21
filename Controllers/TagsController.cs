@@ -7,7 +7,7 @@ using BlogAPI.Services;
 
 namespace BlogAPI.Controllers;
 
-public class TagsController : BaseController<Tag, ShortTagDto, DetailTagDto, CreateTagDto, UpdateTagDto>
+public class TagsController : BaseController<Tag, ListPostDto, DetailTagDto, CreateTagDto, UpdateTagDto>
 {
 
     public TagsController(TagService service, IMapper mapper) : base(service, mapper)
