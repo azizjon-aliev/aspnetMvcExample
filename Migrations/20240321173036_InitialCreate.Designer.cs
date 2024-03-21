@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240314150320_InitialCreate")]
+    [Migration("20240321173036_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,7 +27,7 @@ namespace BlogAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -69,6 +69,21 @@ namespace BlogAPI.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("BlogAPI.Models.Entities.PostTag", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PostId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
+                });
+
             modelBuilder.Entity("BlogAPI.Models.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -88,21 +103,6 @@ namespace BlogAPI.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("PostTag", b =>
-                {
-                    b.Property<int>("PostsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("PostsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("PostTag");
-                });
-
             modelBuilder.Entity("BlogAPI.Models.Entities.Post", b =>
                 {
                     b.HasOne("BlogAPI.Models.Entities.Category", "Category")
@@ -114,17 +114,17 @@ namespace BlogAPI.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("PostTag", b =>
+            modelBuilder.Entity("BlogAPI.Models.Entities.PostTag", b =>
                 {
                     b.HasOne("BlogAPI.Models.Entities.Post", null)
                         .WithMany()
-                        .HasForeignKey("PostsId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BlogAPI.Models.Entities.Tag", null)
                         .WithMany()
-                        .HasForeignKey("TagsId")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
