@@ -4,7 +4,7 @@ namespace BlogAPI.Core.Repositories;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {
-    Task<IQueryable<T>> GetAllAsync();
+    Task<IEnumerable<T>> GetAllAsync();
     Task<T?> GetByIdAsync(int id);
     Task<T> AddAsync(T entity);
     Task<T?> UpdateAsync(int id, T entity);

@@ -19,7 +19,7 @@ public class PostConfiguration: IEntityTypeConfiguration<Post>
             .IsRequired();
 
         builder.HasMany(p => p.Tags)
-            .WithMany(p => p.Posts)
+            .WithMany(t => t.Posts)
             .UsingEntity<PostTag>();
     }
 }

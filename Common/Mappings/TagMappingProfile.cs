@@ -9,8 +9,11 @@ public class TagMappingProfile: Profile
 {
     public TagMappingProfile()
     {
-        CreateMap<Tag, ShortTagDto>().ReverseMap();
-        CreateMap<Tag, DetailTagDto>().ReverseMap();
+        CreateMap<Tag, ShortTagDto>()
+            .ForMember(dest => dest.PostsCount, opt => opt.MapFrom(src => src.Posts.Count));
+
+        CreateMap<Tag, DetailTagDto>();
+        CreateMap<DetailCategoryDto, Tag>();
         CreateMap<Tag, CreateTagDto>().ReverseMap();
         CreateMap<Tag, UpdateTagDto>().ReverseMap();
     }

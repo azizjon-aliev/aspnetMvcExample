@@ -1,5 +1,6 @@
 using BlogApi.Data;
 using BlogAPI.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Core.Repositories;
 
@@ -12,9 +13,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
         _dbContext = dbContext;
     }
 
-    public virtual async Task<IQueryable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
-        return await Task.FromResult(_dbContext.Set<T>().AsQueryable());
+        return await _dbContext.Set<T>().ToListAsync();
     }
 
     public virtual async Task<T?> GetByIdAsync(int id)

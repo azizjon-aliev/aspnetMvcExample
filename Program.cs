@@ -4,6 +4,8 @@ using BlogAPI.Core.Repositories;
 using BlogAPI.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using BlogAPI.Common.Mappings;
+using BlogAPI.Services;
+using BlogAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+builder.Services.AddScoped(typeof(TagRepository));
+builder.Services.AddScoped(typeof(TagService));
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
